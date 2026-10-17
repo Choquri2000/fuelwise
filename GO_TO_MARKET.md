@@ -1,6 +1,6 @@
 # FuelWise - go-to-market
 
-**Live app:** (to be added)  |  **Code:** https://github.com/Choquri2000/fuelwise
+**Live app:** https://fuelwise-car-costs.streamlit.app  |  **Code:** https://github.com/Choquri2000/fuelwise
 
 ## Landing copy
 **What does your car really cost? Find out in 30 seconds.**
