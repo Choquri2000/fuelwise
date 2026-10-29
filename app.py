@@ -143,5 +143,5 @@ show = show.rename(columns={"odo_km": "odometer_km", "litres": "litres", "price_
                             "total": "total_cost", "full": "full_tank", "missed": "missed_fillup",
                             "issue": "ignored_because"})
 st.dataframe(show.round(3), hide_index=True)
-st.download_button("Download cleaned CSV", show.to_csv(index=False).encode("utf-8"), "fuelwise_cleaned.csv", "text/csv")
+st.download_button("Download cleaned CSV", fw.csv_safe(show).to_csv(index=False).encode("utf-8"), "fuelwise_cleaned.csv", "text/csv")
 st.caption("Cleaned file is always in km and litres. Rows with a reason in *ignored_because* were left out of calculations.")

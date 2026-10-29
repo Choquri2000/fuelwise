@@ -343,6 +343,19 @@ def _stats(ok: pd.DataFrame, iv: pd.DataFrame, rows: pd.DataFrame) -> dict:
     return s
 
 
+_FORMULA_START = ("=", "+", "-", "@", "\t", "\r")
+
+
+def csv_safe(df: pd.DataFrame) -> pd.DataFrame:
+    """Copy of df for download: text cells that Excel/Sheets would run as a formula
+    (start with = + - @ tab CR) get a leading apostrophe. Numbers are left alone."""
+    out = df.copy()
+    for c in out.columns:
+        if out[c].dtype == object or pd.api.types.is_string_dtype(out[c]):
+            out[c] = out[c].map(lambda v: "'" + v if isinstance(v, str) and v.startswith(_FORMULA_START) else v)
+    return out
+
+
 def monthly_costs(clean: pd.DataFrame) -> pd.DataFrame:
     ok = clean[(clean.issue == "") & clean.date.notna()]
     if ok.empty:

@@ -128,3 +128,9 @@ def test_app_end_to_end_demo():
     assert any("averages" in s.value for s in at.success)
     assert any("may be worth checking" in w.value for w in at.warning)
     assert len(at.metric) >= 3
+
+
+def test_csv_safe_neutralises_formulas_only_in_text():
+    df = pd.DataFrame({"note": ["=1+1", "ok", None], "litres": [-1.0, 40.0, 41.0]})
+    out = fw.csv_safe(df)
+    assert out["note"].tolist()[:2] == ["'=1+1", "ok"] and out["litres"].tolist() == [-1.0, 40.0, 41.0]
